@@ -1,0 +1,63 @@
+[package]
+name = "fault-injectors-rs"
+version = "0.1.0"
+edition = "2021"
+description = "Rust port of the Griffin aerial-ground cooperative perception fault-injection and information-quality toolkit"
+repository = "https://github.com/adarsh-nl/Fault-Injectors"
+
+# Main CLI binary (fault injection, download, BEV visualisation)
+[[bin]]
+name = "fault-injectors"
+path = "src/main.rs"
+
+# MI estimation CLI (reads feature .npz files, runs InfoNCE / SMILE)
+# Placed under src/bin/ so it can use the library crate cleanly.
+
+[dependencies]
+# Array computing
+ndarray = { version = "0.15", features = ["rayon"] }
+ndarray-rand = "0.14"
+
+# Random number generation
+rand = "0.8"
+rand_distr = "0.4"
+
+# Serialisation / JSON
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# Image I/O
+image = "0.25"
+
+# Error handling
+anyhow = "1"
+thiserror = "1"
+
+# CLI argument parsing
+clap = { version = "4", features = ["derive"] }
+
+# Linear algebra (matrix math, SVD for PCA)
+nalgebra = "0.33"
+
+# HTTP / download
+reqwest = { version = "0.12", features = ["blocking", "json"] }
+
+# Progress bars
+indicatif = "0.17"
+
+# Plotting
+plotters = "0.3"
+
+# PLY point-cloud file format
+ply-rs = "0.1"
+
+# ZIP archive (used by download.rs and feature_extraction.rs)
+zip = "2"
+
+# Deep learning (InfoNCE / SMILE mutual information estimators)
+# Uses CPU by default; enable the "cuda" feature for GPU acceleration.
+candle-core = "0.8"
+candle-nn = "0.8"
+
+[dev-dependencies]
+approx = "0.5"
